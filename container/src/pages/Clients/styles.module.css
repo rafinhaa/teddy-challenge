@@ -1,0 +1,37 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 100px;
+  gap: 10px;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selectContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.select {
+  border: 2px solid var(--border-gray);
+  padding: 4px;
+  margin: 8px 0;
+  border-radius: 4px;
+}
