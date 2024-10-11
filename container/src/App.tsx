@@ -1,9 +1,13 @@
-import Clients from "./pages/Clients"
-import ClientsSelected from "./pages/ClientsSelected"
+import { BrowserRouter } from "react-router-dom"
+
+import { Router } from "./routes"
 
 function App() {
-  return <ClientsSelected />
-  // return <Clients />
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  )
 }
 
 export default App
