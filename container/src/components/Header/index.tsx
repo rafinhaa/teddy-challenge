@@ -6,6 +6,7 @@ import {
   MdMenu,
   MdMoveToInbox,
 } from "react-icons/md"
+import { NavLink } from "react-router-dom"
 
 import styles from "./styles.module.css"
 
@@ -28,13 +29,27 @@ const Header = () => {
         <nav className={styles.navigation}>
           <ul>
             <li>
-              <a href="#">Clientes</a>
+              <NavLink
+                to="/clients"
+                className={({ isActive }) =>
+                  isActive ? styles.activeNavLink : ""
+                }
+              >
+                Clientes
+              </NavLink>
             </li>
             <li>
-              <a href="#">Clientes selecionados</a>
+              <NavLink
+                to="/clients-selected"
+                className={({ isActive }) =>
+                  isActive ? styles.activeNavLink : ""
+                }
+              >
+                Clientes selecionados
+              </NavLink>
             </li>
             <li>
-              <a href="#">Sair</a>
+              <NavLink to="/logout">Sair</NavLink>
             </li>
           </ul>
         </nav>
@@ -54,19 +69,34 @@ const Header = () => {
           <nav>
             <ul>
               <li>
-                <a href="#" onClick={toggleMenu}>
-                  <MdHome /> Home
-                </a>
+                <NavLink
+                  to="/clients"
+                  className={({ isActive }) =>
+                    isActive ? styles.activeNavLinkMobile : ""
+                  }
+                  onClick={toggleMenu}
+                >
+                  <MdHome />
+                  Clientes
+                </NavLink>
               </li>
               <li>
-                <a href="#" onClick={toggleMenu}>
-                  <MdAccountBox /> Clientes
-                </a>
+                <NavLink
+                  to="/clients-selected"
+                  className={({ isActive }) =>
+                    isActive ? styles.activeNavLinkMobile : ""
+                  }
+                  onClick={toggleMenu}
+                >
+                  <MdAccountBox />
+                  Clientes selecionados
+                </NavLink>
               </li>
               <li>
-                <a href="#" onClick={toggleMenu}>
-                  <MdMoveToInbox /> Produtos
-                </a>
+                <NavLink to="/logout" onClick={toggleMenu}>
+                  <MdMoveToInbox />
+                  Sair
+                </NavLink>
               </li>
             </ul>
           </nav>
