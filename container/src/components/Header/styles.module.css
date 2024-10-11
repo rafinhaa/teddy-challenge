@@ -1,0 +1,171 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white-color);
+  padding: 1rem;
+  height: 100px;
+  box-shadow: 0px 2px 2px 0px #0000001a;
+}
+
+.leftSide {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hamburgerMenu {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: none;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+  margin-left: 0.5rem;
+}
+
+.navigation ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+}
+
+.navigation li {
+  margin-right: 20px;
+}
+
+.navigation a:hover {
+  color: var(--text-primary-color);
+  text-decoration: underline;
+}
+
+.mobileMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+}
+
+.mobileMenu.open {
+  display: block;
+  transform: translateX(0);
+}
+
+.mobileMenuContent {
+  background-color: var(--white-color);
+  width: 250px;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.mobileLogoContainer {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(32px);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 128px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileLogoContainer img {
+  width: 100px;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+}
+
+.mobileLogoContainer button {
+  overflow: hidden;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-primary-color);
+  cursor: pointer;
+}
+
+.mobileMenu nav {
+  padding: 24px;
+}
+
+.mobileMenu nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.mobileMenu nav li {
+  margin-bottom: 25px;
+}
+
+.mobileMenu nav a {
+  color: var(--text-primary-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  gap: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    height: auto;
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+  }
+
+  .leftSide,
+  .navigation,
+  .rightSide {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .hamburgerMenu {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .navigation ul {
+    flex-direction: column;
+  }
+
+  .navigation li {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .rightSide {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo {
+    width: 40px;
+  }
+
+  .mobileMenuContent {
+    width: 200px;
+  }
+
+  .mobileLogo {
+    width: 60px;
+  }
+}
