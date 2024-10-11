@@ -1,22 +1,35 @@
 import { createContext, ReactNode, useContext, useState } from "react"
 
+import { Store } from "@/services/store/type"
+
 interface AuthContextType {
-  username: string
+  username: string | null
   onSaveUsername: (username: string) => void
   onLogout: () => void
 }
 
+type AuthProviderProps = {
+  children: ReactNode
+  storage: Store
+}
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [username, setUsername] = useState<string>("")
+export function AuthProvider({ children, storage }: AuthProviderProps) {
+  const [username, setUsername] = useState<string | null>(() => {
+    return storage.get("username")
+  })
 
   const onSaveUsername = (username: string) => {
     setUsername(username)
+
+    storage.save("username", username)
   }
 
   const onLogout = () => {
-    setUsername("")
+    setUsername(null)
+
+    storage.remove("username")
   }
 
   return (
