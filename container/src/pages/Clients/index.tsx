@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { HiTrash } from "react-icons/hi"
 import { MdAdd, MdCreate } from "react-icons/md"
 
@@ -5,7 +6,7 @@ import { Client } from "@/@types/client"
 import Button from "@/components/Button"
 import ClientCard from "@/components/ClientCard"
 import Input from "@/components/Input"
-import Modal from "@/components/Modal"
+import Modal, { ModalRef } from "@/components/Modal"
 import Pagination from "@/components/Pagination"
 import { useSelectedClient } from "@/context/selected-client"
 
@@ -26,8 +27,15 @@ const fakeClients: Client[] = [
 const Clients = () => {
   const { onSelectClient } = useSelectedClient()
 
+  const addClientRef = useRef<ModalRef>(null)
+  const alreadySelectedClientModalRef = useRef<ModalRef>(null)
+
   const handleClickSelectClient = (client: Client) => {
-    onSelectClient(client)
+    try {
+      onSelectClient(client)
+    } catch {
+      alreadySelectedClientModalRef.current?.open()
+    }
   }
 
   return (
@@ -75,16 +83,20 @@ const Clients = () => {
         <Pagination totalPages={10} currentPage={4} onPageChange={() => {}} />
       </footer>
 
-      <Modal title="Criar cliente:" isOpen={false} onClose={() => {}}>
+      <Modal ref={addClientRef} title="Criar cliente:">
         <Input placeholder="Digite o nome" />
         <Input placeholder="Digite o salário" />
         <Input placeholder="Digite o valor da empresa" />
         <Button onClick={() => {}}>Criar cliente</Button>{" "}
       </Modal>
-      <Modal title="Excluir cliente:" isOpen={false} onClose={() => {}}>
+      <Modal title="Excluir cliente:">
         <p>
           Você está prestes a excluir o cliente: <strong>Eduardo</strong>
         </p>
+      </Modal>
+
+      <Modal ref={alreadySelectedClientModalRef} title="Atenção!">
+        <p>Você já selecionou este cliente. Por favor, selecione outro.</p>
       </Modal>
     </main>
   )
