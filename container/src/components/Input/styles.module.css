@@ -1,6 +1,11 @@
-.container {
+input[type="text"] {
   border: 2px solid var(--border-gray);
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
   border-radius: 4px;
-  padding: 10px 8px;
-  height: 40px;
+}
+
+input[type="text"]:hover {
+  border: 2px solid var(--text-primary-color);
 }
