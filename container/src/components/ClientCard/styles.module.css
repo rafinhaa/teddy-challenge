@@ -20,10 +20,11 @@
 .container footer {
   margin-top: 10px;
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
   width: 100%;
 }
 
-.container footer button:last-child {
+.container footer button:first-child {
   color: var(--text-primary-color);
 }

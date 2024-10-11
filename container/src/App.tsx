@@ -1,9 +1,9 @@
-import { useState } from "react"
+import Clients from "./pages/Clients"
+import ClientsSelected from "./pages/ClientsSelected"
 
 function App() {
-  const eu = 2
-
-  return <h1>Hello world!</h1>
+  return <ClientsSelected />
+  // return <Clients />
 }
 
 export default App

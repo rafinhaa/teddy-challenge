@@ -1,3 +1,6 @@
+import { HiTrash } from "react-icons/hi"
+import { MdAdd, MdCreate } from "react-icons/md"
+
 import Button from "@/components/Button"
 import ClientCard from "@/components/ClientCard"
 import Input from "@/components/Input"
@@ -43,7 +46,19 @@ const Clients = () => {
             name={client.name}
             salary={client.salary}
             companyValuation={client.companyValuation}
-          />
+          >
+            <button>
+              <HiTrash />
+            </button>
+
+            <button>
+              <MdCreate />
+            </button>
+
+            <button>
+              <MdAdd />
+            </button>
+          </ClientCard>
         ))}
       </section>
 
@@ -52,13 +67,13 @@ const Clients = () => {
         <Pagination totalPages={10} currentPage={4} onPageChange={() => {}} />
       </footer>
 
-      <Modal title="Criar cliente:" isOpen={false}>
+      <Modal title="Criar cliente:" isOpen={false} onClose={() => {}}>
         <Input placeholder="Digite o nome" />
         <Input placeholder="Digite o salário" />
         <Input placeholder="Digite o valor da empresa" />
         <Button onClick={() => {}}>Criar cliente</Button>{" "}
       </Modal>
-      <Modal title="Excluir cliente:" isOpen={true}>
+      <Modal title="Excluir cliente:" isOpen={false} onClose={() => {}}>
         <p>
           Você está prestes a excluir o cliente: <strong>Eduardo</strong>
         </p>
