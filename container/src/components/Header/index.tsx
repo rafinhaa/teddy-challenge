@@ -10,7 +10,12 @@ import { NavLink } from "react-router-dom"
 
 import styles from "./styles.module.css"
 
-const Header = () => {
+type HeaderProps = {
+  userName: string
+  onPressLogout: () => void
+}
+
+const Header = ({ userName, onPressLogout }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -49,12 +54,14 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/logout">Sair</NavLink>
+              <NavLink to="/" onClick={onPressLogout}>
+                Sair
+              </NavLink>
             </li>
           </ul>
         </nav>
         <div className={styles.rightSide}>
-          Olá, <strong>Usuário</strong>
+          Olá, <strong>{userName}</strong>
         </div>
       </header>
 
@@ -93,7 +100,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/logout" onClick={toggleMenu}>
+                <NavLink to="/" onClick={onPressLogout}>
                   <MdMoveToInbox />
                   Sair
                 </NavLink>
