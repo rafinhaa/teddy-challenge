@@ -1,7 +1,3 @@
-//material
-import { HiTrash } from "react-icons/hi"
-import { MdAdd, MdCreate } from "react-icons/md"
-
 import styles from "./styles.module.css"
 
 const formatValueToLocaleString = (value: number) => {
@@ -16,18 +12,14 @@ export type ClientCardProps = {
   salary: number
   companyValuation: number
 
-  onAdd?: () => void
-  onEdit?: () => void
-  onDelete?: () => void
+  children?: React.ReactNode
 }
 
 const ClientCard = ({
   name,
   salary,
   companyValuation,
-  onAdd,
-  onEdit,
-  onDelete,
+  children,
 }: ClientCardProps) => {
   const formattedSalary = formatValueToLocaleString(salary)
   const formattedCompanyValuation = formatValueToLocaleString(companyValuation)
@@ -38,19 +30,7 @@ const ClientCard = ({
       <p>Salário: {formattedSalary}</p>
       <p>Empresa: {formattedCompanyValuation}</p>
 
-      <footer>
-        <button onClick={onAdd}>
-          <MdAdd />
-        </button>
-
-        <button>
-          <MdCreate onClick={onEdit} />
-        </button>
-
-        <button onClick={onDelete}>
-          <HiTrash />
-        </button>
-      </footer>
+      <footer>{children}</footer>
     </div>
   )
 }
