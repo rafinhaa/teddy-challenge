@@ -1,27 +1,35 @@
 import { HiTrash } from "react-icons/hi"
 import { MdAdd, MdCreate } from "react-icons/md"
 
+import { Client } from "@/@types/client"
 import Button from "@/components/Button"
 import ClientCard from "@/components/ClientCard"
 import Input from "@/components/Input"
 import Modal from "@/components/Modal"
 import Pagination from "@/components/Pagination"
+import { useSelectedClient } from "@/context/selected-client"
 
 import styles from "./styles.module.css"
 
-const fakeClients = [
-  { name: "João", salary: 2000, companyValuation: 1000 },
-  { name: "Maria", salary: 3000, companyValuation: 2000 },
-  { name: "Pedro", salary: 4000, companyValuation: 1500 },
-  { name: "Ana", salary: 5000, companyValuation: 2500 },
-  { name: "Carlos", salary: 6000, companyValuation: 3000 },
-  { name: "Joaquim", salary: 7000, companyValuation: 4000 },
-  { name: "Lucas", salary: 8000, companyValuation: 5000 },
-  { name: "Marcelo", salary: 9000, companyValuation: 6000 },
-  { name: "Rafael", salary: 10000, companyValuation: 7000 },
+const fakeClients: Client[] = [
+  { id: "1", name: "João", salary: 2000, companyValuation: 1000 },
+  { id: "2", name: "Maria", salary: 3000, companyValuation: 2000 },
+  { id: "3", name: "Pedro", salary: 4000, companyValuation: 1500 },
+  { id: "4", name: "Ana", salary: 5000, companyValuation: 2500 },
+  { id: "5", name: "Carlos", salary: 6000, companyValuation: 3000 },
+  { id: "6", name: "Joaquim", salary: 7000, companyValuation: 4000 },
+  { id: "7", name: "Lucas", salary: 8000, companyValuation: 5000 },
+  { id: "8", name: "Marcelo", salary: 9000, companyValuation: 6000 },
+  { id: "9", name: "Rafael", salary: 10000, companyValuation: 7000 },
 ]
 
 const Clients = () => {
+  const { onSelectClient } = useSelectedClient()
+
+  const handleClickSelectClient = (client: Client) => {
+    onSelectClient(client)
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.header}>
@@ -56,7 +64,7 @@ const Clients = () => {
             </button>
 
             <button>
-              <MdAdd />
+              <MdAdd onClick={() => handleClickSelectClient(client)} />
             </button>
           </ClientCard>
         ))}
