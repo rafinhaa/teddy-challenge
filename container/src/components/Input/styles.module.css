@@ -1,11 +1,21 @@
+.container {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
 input[type="text"] {
   border: 2px solid var(--border-gray);
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
   border-radius: 4px;
 }
 
 input[type="text"]:hover {
   border: 2px solid var(--text-primary-color);
+}
+
+.error {
+  margin-top: 1px;
+  font-size: 12px;
+  color: var(--error-color);
 }
