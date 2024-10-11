@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+  align-items: center;
+  background-color: var(--white-color);
+}
+
+.container h3 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.container p {
+  font-size: 14px;
+}
+
+.container footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container footer button:last-child {
+  color: var(--text-primary-color);
+}
