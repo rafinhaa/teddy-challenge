@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query"
 import { useRef, useState } from "react"
 
 import Button from "@/components/Button"
-import Input from "@/components/Input"
 import Modal, { ModalRef } from "@/components/Modal"
 import Pagination from "@/components/Pagination"
 import { useApi } from "@/context/api"
 import { userApi } from "@/services/client"
 
 import ClientsCards from "./components/ClientsCards"
+import CreateClientModal from "./components/CreateClientModal"
 import SelectPerPage from "./components/SelectPerPage"
 import styles from "./styles.module.css"
 
@@ -39,6 +39,10 @@ const Clients = () => {
     setClientsPerPage(Number(e.target.value))
   }
 
+  const handleClickAddClient = () => {
+    addClientRef.current?.open()
+  }
+
   if (error) return <div className={styles.errorContainer}>{error.message}</div>
 
   return (
@@ -66,7 +70,9 @@ const Clients = () => {
       </section>
 
       <footer className={styles.footer}>
-        <Button variant="secondary">Criar cliente</Button>
+        <Button variant="secondary" onClick={handleClickAddClient}>
+          Criar cliente
+        </Button>
         <Pagination
           totalPages={data?.totalPages ?? 1}
           currentPage={data?.currentPage || 1}
@@ -74,12 +80,7 @@ const Clients = () => {
         />
       </footer>
 
-      <Modal ref={addClientRef} title="Criar cliente:">
-        <Input placeholder="Digite o nome" />
-        <Input placeholder="Digite o salário" />
-        <Input placeholder="Digite o valor da empresa" />
-        <Button onClick={() => {}}>Criar cliente</Button>{" "}
-      </Modal>
+      <CreateClientModal ref={addClientRef} />
       <Modal title="Excluir cliente:">
         <p>
           Você está prestes a excluir o cliente: <strong>Eduardo</strong>
