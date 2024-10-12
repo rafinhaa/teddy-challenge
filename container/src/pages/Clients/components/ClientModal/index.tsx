@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import Button from "buttons/Button"
-import Input from "buttons/Input"
+import Button from "components/Button"
+import Input from "components/Input"
 import {
   forwardRef,
   useEffect,

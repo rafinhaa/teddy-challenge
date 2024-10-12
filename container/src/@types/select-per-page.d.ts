@@ -1,4 +1,4 @@
-declare module "buttons/SelectPerPage" {
+declare module "components/SelectPerPage" {
   const Pagination: React.FC<{
     clientsPerPage: number
     handleClientsPerPageChange: (
