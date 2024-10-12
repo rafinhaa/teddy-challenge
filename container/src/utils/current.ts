@@ -16,5 +16,6 @@ export const formatValueToLocaleString = (value: number) => {
 }
 
 export const currencyToNumber = (value: string) => {
-  return parseFloat(value.replace(/[R$,.]/g, ""))
+  const cleanedValue = value.replace(/[R$\s.]/g, "").replace(",", ".")
+  return parseFloat(cleanedValue)
 }
