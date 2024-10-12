@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import Button from "buttons/Button"
+import Input from "buttons/Input"
 import {
   forwardRef,
   useEffect,
@@ -11,8 +13,6 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Client } from "@/@types/client"
-import Button from "@/components/Button"
-import Input from "@/components/Input"
 import Modal, { ModalRef } from "@/components/Modal"
 import { useApi } from "@/context/api"
 import { useSelectedClient } from "@/context/selected-client"

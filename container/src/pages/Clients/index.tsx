@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
+import Button from "buttons/Button"
+import Pagination from "buttons/Pagination"
+import SelectPerPage from "buttons/SelectPerPage"
 import { useRef, useState } from "react"
 
 import { Client } from "@/@types/client"
-import Button from "@/components/Button"
-import Pagination from "@/components/Pagination"
 import { useApi } from "@/context/api"
 import { userApi } from "@/services/client"
 
 import ClientModal, { ClientModalRef } from "./components/ClientModal"
 import ClientsCards from "./components/ClientsCards"
-import SelectPerPage from "./components/SelectPerPage"
 import styles from "./styles.module.css"
 
 const Clients = () => {

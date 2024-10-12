@@ -1,31 +1,26 @@
-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: transparent;
-  border: none;
-  outline: none;
-}
-
 .button {
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 10px;
   border-radius: 4px;
   font-weight: 700;
   cursor: pointer;
-  height: 40px;
+  width: 100%;
+}
+
+.button:hover {
+  opacity: 0.8;
 }
 
 .primary {
-  background-color: #ec6724;
-  color: white;
+  background-color: var(--text-primary-color);
+  color: var(--white-color);
 }
 
 .secondary {
   background-color: transparent;
-  color: #ec6724;
-  border: 2px solid #ec6724;
+  color: var(--text-primary-color);
+  border: 2px solid var(--text-primary-color);
 }
