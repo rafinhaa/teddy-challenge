@@ -12,9 +12,10 @@ import styles from "./styles.module.css"
 
 export type ClientCardsProps = {
   data: Client[]
+  onEditClient: (client: Client) => void
 }
 
-const ClientsCards = ({ data }: ClientCardsProps) => {
+const ClientsCards = ({ data, onEditClient }: ClientCardsProps) => {
   const { onSelectClient } = useSelectedClient()
 
   const alreadySelectedClientModalRef = useRef<ModalRef>(null)
@@ -32,6 +33,10 @@ const ClientsCards = ({ data }: ClientCardsProps) => {
     deleteClientRef.current?.open(client)
   }
 
+  const handleClickEditClient = (client: Client) => () => {
+    onEditClient(client)
+  }
+
   return (
     <div className={styles.cards}>
       {data.map((client) => (
@@ -46,7 +51,7 @@ const ClientsCards = ({ data }: ClientCardsProps) => {
           </button>
 
           <button>
-            <MdCreate />
+            <MdCreate onClick={handleClickEditClient(client)} />
           </button>
 
           <button>
