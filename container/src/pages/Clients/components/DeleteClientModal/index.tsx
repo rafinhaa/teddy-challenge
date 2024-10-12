@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import Button from "buttons/Button"
+import Button from "components/Button"
 import { forwardRef, useImperativeHandle, useRef, useState } from "react"
 
 import { Client } from "@/@types/client"

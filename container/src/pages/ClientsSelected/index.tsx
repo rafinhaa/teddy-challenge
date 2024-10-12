@@ -1,4 +1,4 @@
-import Button from "buttons/Button"
+import Button from "components/Button"
 import { useRef, useState } from "react"
 import { MdRemove } from "react-icons/md"
 
