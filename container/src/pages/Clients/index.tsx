@@ -1,4 +1,5 @@
-import { useRef } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { useRef, useState } from "react"
 import { HiTrash } from "react-icons/hi"
 import { MdAdd, MdCreate } from "react-icons/md"
 
@@ -8,24 +9,27 @@ import ClientCard from "@/components/ClientCard"
 import Input from "@/components/Input"
 import Modal, { ModalRef } from "@/components/Modal"
 import Pagination from "@/components/Pagination"
+import { useApi } from "@/context/api"
 import { useSelectedClient } from "@/context/selected-client"
+import { userApi } from "@/services/client"
 
 import styles from "./styles.module.css"
 
-const fakeClients: Client[] = [
-  { id: "1", name: "João", salary: 2000, companyValuation: 1000 },
-  { id: "2", name: "Maria", salary: 3000, companyValuation: 2000 },
-  { id: "3", name: "Pedro", salary: 4000, companyValuation: 1500 },
-  { id: "4", name: "Ana", salary: 5000, companyValuation: 2500 },
-  { id: "5", name: "Carlos", salary: 6000, companyValuation: 3000 },
-  { id: "6", name: "Joaquim", salary: 7000, companyValuation: 4000 },
-  { id: "7", name: "Lucas", salary: 8000, companyValuation: 5000 },
-  { id: "8", name: "Marcelo", salary: 9000, companyValuation: 6000 },
-  { id: "9", name: "Rafael", salary: 10000, companyValuation: 7000 },
-]
-
 const Clients = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [clientsPerPage, setClientsPerPage] = useState<number>(10)
+
   const { onSelectClient } = useSelectedClient()
+  const { api } = useApi()
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["clients", currentPage, clientsPerPage],
+    queryFn: () =>
+      userApi.getClients(api, {
+        page: currentPage,
+        limit: clientsPerPage,
+      }),
+  })
 
   const addClientRef = useRef<ModalRef>(null)
   const alreadySelectedClientModalRef = useRef<ModalRef>(null)
@@ -38,49 +42,78 @@ const Clients = () => {
     }
   }
 
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage)
+  }
+
+  const handleClientsPerPageChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setClientsPerPage(Number(e.target.value))
+  }
+
+  if (error) return <div className={styles.errorContainer}>{error.message}</div>
+
   return (
     <main className={styles.main}>
       <div className={styles.header}>
         <p>
-          <strong>16</strong> clientes encontrados:
+          <strong>{data?.clients.length}</strong> clientes encontrados:
         </p>
         <div className={styles.selectContainer}>
           Clientes por página:
-          <select className={styles.select}>
-            <option value="10">10</option>
-            <option selected value="20">
-              20
-            </option>
-            <option value="30">30</option>
+          <select
+            onChange={handleClientsPerPageChange}
+            className={styles.select}
+          >
+            {[5, 10, 15].map((item) => (
+              <option
+                key={item}
+                value={item}
+                selected={item === clientsPerPage}
+              >
+                {item}
+              </option>
+            ))}
           </select>
         </div>
       </div>
       <section className={styles.section}>
-        {fakeClients.map((client) => (
-          <ClientCard
-            key={client.name}
-            name={client.name}
-            salary={client.salary}
-            companyValuation={client.companyValuation}
-          >
-            <button>
-              <HiTrash />
-            </button>
+        {isPending ? (
+          <div className={styles.loadingContainer}>
+            <p>Carregando...</p>
+          </div>
+        ) : (
+          data?.clients.map((client) => (
+            <ClientCard
+              key={client.name}
+              name={client.name}
+              salary={client.salary}
+              companyValuation={client.companyValuation}
+            >
+              <button>
+                <HiTrash />
+              </button>
 
-            <button>
-              <MdCreate />
-            </button>
+              <button>
+                <MdCreate />
+              </button>
 
-            <button>
-              <MdAdd onClick={() => handleClickSelectClient(client)} />
-            </button>
-          </ClientCard>
-        ))}
+              <button>
+                <MdAdd onClick={() => handleClickSelectClient(client)} />
+              </button>
+            </ClientCard>
+          ))
+        )}
       </section>
 
       <footer className={styles.footer}>
         <Button variant="secondary">Criar cliente</Button>
-        <Pagination totalPages={10} currentPage={4} onPageChange={() => {}} />
+        <Pagination
+          totalPages={data?.totalPages ?? 1}
+          currentPage={data?.currentPage || 1}
+          onPageChange={handlePageChange}
+        />
       </footer>
 
       <Modal ref={addClientRef} title="Criar cliente:">
