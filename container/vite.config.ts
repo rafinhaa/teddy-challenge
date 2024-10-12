@@ -28,6 +28,13 @@ export default defineConfig({
     strictPort: true,
     host: true,
     cors: true,
+    proxy: {
+      "/api": {
+        target: "https://boasorte.teddybackoffice.com.br/",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
   resolve: {
     alias: {
