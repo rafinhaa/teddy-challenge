@@ -5,6 +5,7 @@ import styles from "./styles.module.css"
 
 export type ModalProps = {
   title: string
+  onClose?: () => void
 
   children?: React.ReactNode
 }
@@ -14,36 +15,43 @@ export type ModalRef = {
   close: () => void
 }
 
-const Modal = forwardRef<ModalRef, ModalProps>(({ title, children }, ref) => {
-  const [isOpen, setIsOpen] = useState(false)
+const Modal = forwardRef<ModalRef, ModalProps>(
+  ({ title, children, onClose }, ref) => {
+    const [isOpen, setIsOpen] = useState(false)
 
-  useImperativeHandle(ref, () => ({
-    open: () => {
-      setIsOpen(true)
-    },
-    close: () => {
+    const handleClickClose = () => {
       setIsOpen(false)
-    },
-  }))
+      onClose?.()
+    }
 
-  return (
-    isOpen && (
-      <div>
-        <div className={styles.overlay} />
+    useImperativeHandle(ref, () => ({
+      open: () => {
+        setIsOpen(true)
+      },
+      close: () => {
+        setIsOpen(false)
+      },
+    }))
 
-        <div className={styles.modal}>
-          <header>
-            <h3>{title}</h3>
-            <button onClick={() => setIsOpen(false)}>
-              <MdClose size={24} />
-            </button>
-          </header>
+    return (
+      isOpen && (
+        <div>
+          <div className={styles.overlay} />
 
-          {children}
+          <div className={styles.modal}>
+            <header>
+              <h3>{title}</h3>
+              <button onClick={handleClickClose}>
+                <MdClose size={24} />
+              </button>
+            </header>
+
+            {children}
+          </div>
         </div>
-      </div>
+      )
     )
-  )
-})
+  },
+)
 
 export default Modal
