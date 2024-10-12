@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import Button from "buttons/Button"
 import { forwardRef, useImperativeHandle, useRef, useState } from "react"
 
 import { Client } from "@/@types/client"
-import Button from "@/components/Button"
 import Modal, { ModalRef } from "@/components/Modal"
 import { useApi } from "@/context/api"
 import { useSelectedClient } from "@/context/selected-client"
