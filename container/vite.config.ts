@@ -9,7 +9,8 @@ export default defineConfig({
     federation({
       name: "host-app",
       remotes: {
-        components: "http://localhost:3001/assets/components.js",
+        components:
+          "https://teddy-challenge-components.vercel.app/assets/components.js",
       },
       shared: ["react", "react-dom"],
     }),
