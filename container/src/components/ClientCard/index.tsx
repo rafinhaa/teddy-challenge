@@ -1,11 +1,6 @@
-import styles from "./styles.module.css"
+import { formatValueToLocaleString } from "@/utils/current"
 
-const formatValueToLocaleString = (value: number) => {
-  return value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  })
-}
+import styles from "./styles.module.css"
 
 export type ClientCardProps = {
   name: string
