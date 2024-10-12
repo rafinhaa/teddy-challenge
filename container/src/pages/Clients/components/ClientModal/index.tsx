@@ -152,7 +152,7 @@ const ClientModal = forwardRef<ClientModalRef, ClientModalProps>(
     }))
 
     return (
-      <Modal ref={modalRef} title="Criar cliente:">
+      <Modal ref={modalRef} title="Criar cliente:" onClose={() => reset()}>
         <form onSubmit={handleSubmit(submit)}>
           <Input
             placeholder="Digite o nome:"
