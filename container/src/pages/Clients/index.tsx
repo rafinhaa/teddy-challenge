@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useRef, useState } from "react"
 
 import Button from "@/components/Button"
-import Modal, { ModalRef } from "@/components/Modal"
+import { ModalRef } from "@/components/Modal"
 import Pagination from "@/components/Pagination"
 import { useApi } from "@/context/api"
 import { userApi } from "@/services/client"
@@ -81,11 +81,6 @@ const Clients = () => {
       </footer>
 
       <CreateClientModal ref={addClientRef} />
-      <Modal title="Excluir cliente:">
-        <p>
-          Você está prestes a excluir o cliente: <strong>Eduardo</strong>
-        </p>
-      </Modal>
     </main>
   )
 }

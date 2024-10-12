@@ -7,6 +7,7 @@ import ClientCard from "@/components/ClientCard"
 import Modal, { ModalRef } from "@/components/Modal"
 import { useSelectedClient } from "@/context/selected-client"
 
+import DeleteClientModal, { DeleteClientModalRef } from "../DeleteClientModal"
 import styles from "./styles.module.css"
 
 export type ClientCardsProps = {
@@ -17,6 +18,7 @@ const ClientsCards = ({ data }: ClientCardsProps) => {
   const { onSelectClient } = useSelectedClient()
 
   const alreadySelectedClientModalRef = useRef<ModalRef>(null)
+  const deleteClientRef = useRef<DeleteClientModalRef>(null)
 
   const handleClickSelectClient = (client: Client) => () => {
     try {
@@ -25,17 +27,22 @@ const ClientsCards = ({ data }: ClientCardsProps) => {
       alreadySelectedClientModalRef.current?.open()
     }
   }
+
+  const handleClickDeleteClient = (client: Client) => () => {
+    deleteClientRef.current?.open(client)
+  }
+
   return (
     <div className={styles.cards}>
       {data.map((client) => (
         <ClientCard
-          key={client.name}
+          key={client.id}
           name={client.name}
           salary={client.salary}
           companyValuation={client.companyValuation}
         >
           <button>
-            <HiTrash />
+            <HiTrash onClick={handleClickDeleteClient(client)} />
           </button>
 
           <button>
@@ -51,6 +58,8 @@ const ClientsCards = ({ data }: ClientCardsProps) => {
       <Modal ref={alreadySelectedClientModalRef} title="Atenção!">
         <p>Você já selecionou este cliente. Por favor, selecione outro.</p>
       </Modal>
+
+      <DeleteClientModal ref={deleteClientRef} />
     </div>
   )
 }
