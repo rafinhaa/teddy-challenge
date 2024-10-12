@@ -27,7 +27,8 @@
 }
 
 .modal {
-  width: 400px;
+  max-width: 400px;
+  width: 90%;
   border-radius: 4px;
   background-color: var(--white-color);
   box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
@@ -35,10 +36,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
   gap: 10px;
+  overflow: hidden;
 }
