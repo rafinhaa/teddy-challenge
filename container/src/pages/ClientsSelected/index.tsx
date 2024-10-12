@@ -1,8 +1,8 @@
+import Button from "buttons/Button"
 import { useRef, useState } from "react"
 import { MdRemove } from "react-icons/md"
 
 import { Client } from "@/@types/client"
-import Button from "@/components/Button"
 import ClientCard from "@/components/ClientCard"
 import Modal, { ModalRef } from "@/components/Modal"
 import { useSelectedClient } from "@/context/selected-client"

@@ -10,6 +10,9 @@ export default defineConfig({
       filename: "buttons.js",
       exposes: {
         "./Button": "./src/components/Button",
+        "./Input": "./src/components/Input",
+        "./Pagination": "./src/components/Pagination",
+        "./SelectPerPage": "./src/components/SelectPerPage",
       },
       shared: ["react", "react-dom"],
     }),
