@@ -8,6 +8,7 @@ interface SelectedClientContextType {
   onSelectClient: (client: Client) => void
   onRemoveSelectedClient: (client: Client) => void
   onClearAllSelectedClients: () => void
+  onUpdateSelectedClient: (client: Client) => void
 }
 
 type SelectedClientProviderProps = {
@@ -49,6 +50,17 @@ export function SelectedClientProvider({
     storage.save("selectedClients", newSelectedClients)
   }
 
+  const onUpdateSelectedClient = (client: Client) => {
+    const newSelectedClients = selectedClients.map((selectedClient) => {
+      if (selectedClient.id === client.id) return client
+      return selectedClient
+    })
+
+    setSelectedClients(newSelectedClients)
+
+    storage.save("selectedClients", newSelectedClients)
+  }
+
   const onClearAllSelectedClients = () => {
     setSelectedClients([])
 
@@ -62,6 +74,7 @@ export function SelectedClientProvider({
         onSelectClient,
         onRemoveSelectedClient,
         onClearAllSelectedClients,
+        onUpdateSelectedClient,
       }}
     >
       {children}
