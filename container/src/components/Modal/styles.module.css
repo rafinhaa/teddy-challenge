@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
 }
 
 .modal h3 {
@@ -40,4 +40,5 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
+  gap: 10px;
 }
