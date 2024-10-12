@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: "buttons",
-      filename: "buttons.js",
+      name: "components",
+      filename: "components.js",
       exposes: {
         "./Button": "./src/components/Button",
         "./Input": "./src/components/Input",

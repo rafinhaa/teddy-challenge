@@ -1,4 +1,4 @@
-declare module "buttons/Input" {
+declare module "components/Input" {
   const Input: React.FC<
     React.InputHTMLAttributes<HTMLInputElement> & {
       error?: string
