@@ -72,7 +72,9 @@ export function SelectedClientProvider({
 export function useSelectedClient() {
   const context = useContext(SelectedClientContext)
   if (!context) {
-    throw new Error("useTasks must be used within a TaskProvider")
+    throw new Error(
+      "useSelectedClient must be used within a SelectedClientProvider",
+    )
   }
   return context
 }
