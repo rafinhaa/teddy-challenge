@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import { useRef, useState } from "react"
 
+import { Client } from "@/@types/client"
 import Button from "@/components/Button"
-import { ModalRef } from "@/components/Modal"
 import Pagination from "@/components/Pagination"
 import { useApi } from "@/context/api"
 import { userApi } from "@/services/client"
 
+import ClientModal, { ClientModalRef } from "./components/ClientModal"
 import ClientsCards from "./components/ClientsCards"
-import CreateClientModal from "./components/CreateClientModal"
 import SelectPerPage from "./components/SelectPerPage"
 import styles from "./styles.module.css"
 
@@ -27,7 +27,7 @@ const Clients = () => {
       }),
   })
 
-  const addClientRef = useRef<ModalRef>(null)
+  const clientModalRef = useRef<ClientModalRef>(null)
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage)
@@ -40,7 +40,11 @@ const Clients = () => {
   }
 
   const handleClickAddClient = () => {
-    addClientRef.current?.open()
+    clientModalRef.current?.open()
+  }
+
+  const handleClickEditClient = (client: Client) => {
+    clientModalRef.current?.open(client)
   }
 
   if (error) return <div className={styles.errorContainer}>{error.message}</div>
@@ -65,7 +69,10 @@ const Clients = () => {
             <p>Carregando...</p>
           </div>
         ) : (
-          <ClientsCards data={data?.clients} />
+          <ClientsCards
+            data={data?.clients}
+            onEditClient={handleClickEditClient}
+          />
         )}
       </section>
 
@@ -80,7 +87,7 @@ const Clients = () => {
         />
       </footer>
 
-      <CreateClientModal ref={addClientRef} />
+      <ClientModal ref={clientModalRef} />
     </main>
   )
 }

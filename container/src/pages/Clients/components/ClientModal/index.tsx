@@ -1,6 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react"
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -9,6 +15,7 @@ import Button from "@/components/Button"
 import Input from "@/components/Input"
 import Modal, { ModalRef } from "@/components/Modal"
 import { useApi } from "@/context/api"
+import { useSelectedClient } from "@/context/selected-client"
 import { userApi } from "@/services/client"
 import { currencyToNumber, formatCurrency } from "@/utils/current"
 
@@ -47,13 +54,21 @@ const createClientSchema = z.object({
     ),
 })
 
-type CreateClientSchema = z.infer<typeof createClientSchema>
+type ClientSchema = z.infer<typeof createClientSchema>
 
-export type CreateClientModalProps = object
+export type ClientModalProps = object
 
-const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
+export type ClientModalRef = {
+  open: (client?: Client) => void
+  close: () => void
+}
+
+const ClientModal = forwardRef<ClientModalRef, ClientModalProps>(
   (_props, ref) => {
+    const [clientId, setClientId] = useState<number | null>(null)
+
     const { api } = useApi()
+    const { onUpdateSelectedClient } = useSelectedClient()
     const queryClient = useQueryClient()
     const modalRef = useRef<ModalRef>(null)
 
@@ -64,7 +79,7 @@ const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
       watch,
       reset,
       formState: { errors, isSubmitting },
-    } = useForm<CreateClientSchema>({
+    } = useForm<ClientSchema>({
       resolver: zodResolver(createClientSchema),
     })
 
@@ -78,7 +93,20 @@ const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
       },
     })
 
-    const handlePressCreateClient = async (data: CreateClientSchema) => {
+    const { mutateAsync: updateClient } = useMutation({
+      mutationKey: ["createClient"],
+      mutationFn: (data: Client) => userApi.updateClient(api, data),
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({ queryKey: ["clients"] })
+        modalRef.current?.close()
+
+        onUpdateSelectedClient(data)
+
+        reset()
+      },
+    })
+
+    const handlePressCreateClient = async (data: ClientSchema) => {
       await createClient({
         name: data.name,
         salary: currencyToNumber(data.salary),
@@ -86,6 +114,17 @@ const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
       })
     }
 
+    const handlePressUpdateClient = async (data: ClientSchema) => {
+      await updateClient({
+        id: clientId as number,
+        name: data.name,
+        salary: currencyToNumber(data.salary),
+        companyValuation: currencyToNumber(data.companyValuation),
+      })
+    }
+
+    const submit = clientId ? handlePressUpdateClient : handlePressCreateClient
+    const buttonLabel = clientId ? "Editar cliente" : "Criar cliente"
     const salaryValue = watch("salary")
     const companyValuationValue = watch("companyValuation")
 
@@ -99,14 +138,22 @@ const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
       close: () => {
         modalRef.current?.close()
       },
-      open: () => {
+      open: (client?: Client) => {
+        if (client) {
+          setValue("name", client.name)
+          setValue("salary", formatCurrency(client.salary))
+          setValue("companyValuation", formatCurrency(client.companyValuation))
+
+          setClientId(client.id)
+        }
+
         modalRef.current?.open()
       },
     }))
 
     return (
       <Modal ref={modalRef} title="Criar cliente:">
-        <form onSubmit={handleSubmit(handlePressCreateClient)}>
+        <form onSubmit={handleSubmit(submit)}>
           <Input
             placeholder="Digite o nome:"
             error={errors.name?.message}
@@ -126,7 +173,7 @@ const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
             {...register("companyValuation")}
           />
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Criando..." : "Criar"}
+            {isSubmitting ? "Enviando..." : buttonLabel}
           </Button>
         </form>
       </Modal>
@@ -134,4 +181,4 @@ const CreateClientModal = forwardRef<ModalRef, CreateClientModalProps>(
   },
 )
 
-export default CreateClientModal
+export default ClientModal
