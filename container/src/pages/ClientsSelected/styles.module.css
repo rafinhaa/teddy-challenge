@@ -7,7 +7,7 @@
 
 .section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(0px, 285px));
   gap: 20px;
 }
 
