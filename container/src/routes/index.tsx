@@ -21,9 +21,11 @@ const PrivateRoute = ({ isLogged, children }: PrivateRouteProps) => {
 export const Router = () => {
   const { username } = useAuth()
 
+  const InitialRoute = username ? <Navigate to="/clients" replace /> : <Home />
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={InitialRoute} />
 
       <Route
         path="/"
