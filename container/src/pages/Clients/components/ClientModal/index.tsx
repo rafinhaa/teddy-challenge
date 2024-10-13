@@ -77,11 +77,16 @@ const ClientModal = forwardRef<ClientModalRef, ClientModalProps>(
       handleSubmit,
       setValue,
       watch,
-      reset,
+      reset: resetForm,
       formState: { errors, isSubmitting },
     } = useForm<ClientSchema>({
       resolver: zodResolver(createClientSchema),
     })
+
+    const reset = () => {
+      setClientId(null)
+      resetForm()
+    }
 
     const { mutateAsync: createClient } = useMutation({
       mutationKey: ["createClient"],
