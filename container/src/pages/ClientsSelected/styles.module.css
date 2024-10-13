@@ -1,14 +1,20 @@
 .main {
   display: flex;
   flex-direction: column;
-  padding: 30px 100px;
+  padding: 30px 10%;
   gap: 10px;
 }
 
 .section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0px, 285px));
+  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
   gap: 20px;
+}
+
+@media (max-width: 420px) {
+  .section {
+    grid-template-columns: 1fr;
+  }
 }
 
 .header {
