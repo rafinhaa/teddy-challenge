@@ -77,7 +77,7 @@ const ClientModal = forwardRef<ClientModalRef, ClientModalProps>(
       handleSubmit,
       setValue,
       watch,
-      reset,
+      reset: resetForm,
       formState: { errors, isSubmitting },
     } = useForm<ClientSchema>({
       resolver: zodResolver(createClientSchema),
@@ -127,6 +127,11 @@ const ClientModal = forwardRef<ClientModalRef, ClientModalProps>(
     const buttonLabel = clientId ? "Editar cliente" : "Criar cliente"
     const salaryValue = watch("salary")
     const companyValuationValue = watch("companyValuation")
+
+    const reset = () => {
+      setClientId(null)
+      resetForm()
+    }
 
     useEffect(() => {
       if (salaryValue) setValue("salary", formatCurrency(salaryValue))
