@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { HiTrash } from "react-icons/hi"
-import { MdAdd, MdCreate } from "react-icons/md"
+import { MdAdd, MdCheck, MdCreate } from "react-icons/md"
 
 import { Client } from "@/@types/client"
 import ClientCard from "@/components/ClientCard"
@@ -16,7 +16,7 @@ export type ClientCardsProps = {
 }
 
 const ClientsCards = ({ data, onEditClient }: ClientCardsProps) => {
-  const { onSelectClient } = useSelectedClient()
+  const { onSelectClient, selectedClients } = useSelectedClient()
 
   const alreadySelectedClientModalRef = useRef<ModalRef>(null)
   const deleteClientRef = useRef<DeleteClientModalRef>(null)
@@ -37,6 +37,12 @@ const ClientsCards = ({ data, onEditClient }: ClientCardsProps) => {
     onEditClient(client)
   }
 
+  const clientAlreadySelected = (client: Client) => {
+    return selectedClients.find(
+      (selectedClient) => selectedClient.id === client.id,
+    )
+  }
+
   return (
     <div className={styles.cards}>
       {data.map((client) => (
@@ -47,16 +53,20 @@ const ClientsCards = ({ data, onEditClient }: ClientCardsProps) => {
           companyValuation={client.companyValuation}
         >
           <button>
-            <HiTrash onClick={handleClickDeleteClient(client)} />
+            <HiTrash size={15} onClick={handleClickDeleteClient(client)} />
           </button>
 
           <button>
-            <MdCreate onClick={handleClickEditClient(client)} />
+            <MdCreate size={15} onClick={handleClickEditClient(client)} />
           </button>
 
-          <button>
-            <MdAdd onClick={handleClickSelectClient(client)} />
-          </button>
+          {clientAlreadySelected(client) ? (
+            <MdCheck size={15} />
+          ) : (
+            <button>
+              <MdAdd size={15} onClick={handleClickSelectClient(client)} />
+            </button>
+          )}
         </ClientCard>
       ))}
 
