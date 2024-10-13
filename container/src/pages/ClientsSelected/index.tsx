@@ -89,7 +89,8 @@ const ClientsSelected = () => {
 
       <Modal ref={removeSelectedClientRef} title="Atenção!">
         <p>
-          Deseja excluir o cliente <strong>{selectedClient?.name}</strong>?
+          Deseja remover da seleção o cliente{" "}
+          <strong>{selectedClient?.name}</strong>?
         </p>
         <Button variant="secondary" onClick={handleRemoveSelectedClient}>
           Sim
